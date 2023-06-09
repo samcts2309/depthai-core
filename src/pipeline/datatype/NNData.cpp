@@ -205,10 +205,10 @@ std::vector<std::int32_t> NNData::getLayerInt32(const std::string& name) const {
                 std::size_t numElements = size / sizeof(std::int32_t);  // FP16
 
                 std::vector<std::int32_t> data;
-                data.reserve(numElements);
+                data.resize(numElements);
                 auto* pInt32Data = reinterpret_cast<std::int32_t*>(&rawNn.data[tensor.offset]);
                 for(std::size_t i = 0; i < numElements; i++) {
-                    data.push_back(pInt32Data[i]);
+                    data[i] = pInt32Data[i];
                 }
                 return data;
             }
@@ -229,10 +229,10 @@ std::vector<float> NNData::getLayerFp16(const std::string& name) const {
                 std::size_t numElements = size / 2;  // FP16
 
                 std::vector<float> data;
-                data.reserve(numElements);
+                data.resize(numElements);
                 auto* pFp16Data = reinterpret_cast<std::uint16_t*>(&rawNn.data[tensor.offset]);
                 for(std::size_t i = 0; i < numElements; i++) {
-                    data.push_back(fp16_ieee_to_fp32_value(pFp16Data[i]));
+                    data[i] = fp16_ieee_to_fp32_value(pFp16Data[i]);
                 }
                 return data;
             }
